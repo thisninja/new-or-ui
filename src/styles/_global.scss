@@ -1,0 +1,71 @@
+.round {
+    border-radius: 50%;
+}
+.clickable {
+    cursor: pointer;
+}
+.no-border {
+    border: none;
+}
+.disabled {
+    pointer-events: none;
+}
+.full-width {
+    width: 100%;
+}
+.full-height {
+    height: 100%;
+}
+.no-scrollbar {
+    &::-webkit-scrollbar {
+        width: 0 !important;
+    }
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+}
+.pull-right {
+    float: right;
+}
+.pull-left {
+    float: left;
+}
+
+// Display
+.hidden {
+    visibility: hidden;
+}
+.gone {
+    display: none;
+}
+
+// Flex (flex- prefix to prevent conflicts with bootstrap classes)
+.flex-align-center {
+    display: flex;
+    align-items: center;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+// Text
+.uppercase {
+    text-transform: uppercase;
+}
+.bold {
+    font-weight: bold;
+}
+@for $i from 1 through 9 {
+    .text-#{$i*100} {
+        font-weight: $i * 100;
+    }
+}
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

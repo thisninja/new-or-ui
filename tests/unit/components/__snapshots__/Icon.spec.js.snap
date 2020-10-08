@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<svgicon
+  class="cl-icon"
+  color="#8d9aa6"
+  fill="true"
+  height="24px"
+  width="24px"
+/>
+`;

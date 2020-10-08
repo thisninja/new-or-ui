@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  class="cl-three-states-switch"
+  style="width: 52px; height: 24px; border-radius: 4px; justify-content: space-around; background-color: rgb(57, 191, 102); color: white;"
+>
+  <div
+    class="text-smaller"
+  >
+    
+        on
+    
+  </div>
+   
+  <div
+    class="square"
+    style="width: 16px; height: 16px;"
+  />
+   
+  <!---->
+</div>
+`;

@@ -1,0 +1,27 @@
+version: 2.1
+
+defaults: &defaults
+    docker:
+        - image: circleci/node:10.15.3-stretch
+    working_directory: ~/repo
+
+commands:
+    install_dependencies:
+        description: 'Install and cache dependencies'
+        steps:
+            - restore_cache:
+                  keys:
+                      - v1-dependencies-{{ checksum "package.json" }}
+            - run: yarn install
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: v1-dependencies-{{ checksum "package.json" }}
+jobs:
+    build:
+        <<: *defaults
+        steps:
+            - checkout
+            - install_dependencies
+            - run: yarn lint
+            - run: yarn test:unit

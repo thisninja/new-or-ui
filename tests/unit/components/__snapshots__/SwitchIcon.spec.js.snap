@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  class="cl-switch-icon clickable"
+  style="width: 48px; height: 28px; background-color: rgb(245, 248, 250); justify-content: flex-end; border-radius: 14px; padding: 4px;"
+>
+  <cl-icon />
+</div>
+`;

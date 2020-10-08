@@ -1,0 +1,28 @@
+.el-switch {
+    .el-switch__label {
+        color: $color_light_grey1;
+    }
+    &.small {
+        .el-switch__label {
+            font-size: 12px;
+        }
+        .el-switch__core {
+            width: 28px !important;
+            height: 16px;
+            &:after {
+                width: 8px;
+                height: 8px;
+                top: 3px
+            }
+        }
+        &.is-checked .el-switch__core:after {
+            margin-left: -10px;
+        }
+    }
+    &.is-checked,
+    &:hover {
+        .el-switch__label {
+            color: $color_dark_grey1;
+        }
+    }
+}

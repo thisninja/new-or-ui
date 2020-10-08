@@ -1,0 +1,18 @@
+.el-radio-group {
+    &.column {
+        display: flex;
+        flex-direction: column;
+        .el-radio {
+            margin-right: 0px;
+        }
+    }
+    &.full-width {
+        width: 100%;
+        .el-radio-button {
+            width: 50%;
+            .el-radio-button__inner {
+                width: 100%;
+            }
+        }
+    }
+}

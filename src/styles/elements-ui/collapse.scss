@@ -1,0 +1,11 @@
+.el-collapse {
+    &.no-border {
+        border: none;
+        .el-collapse-item__header {
+            border: none;
+        }
+        .el-collapse-item__wrap {
+            border: none;
+        }
+    }
+}

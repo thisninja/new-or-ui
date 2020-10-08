@@ -1,0 +1,27 @@
+.el-form-item {
+    &.inline {
+        display: inline-block;
+        margin-bottom: 0px;
+        .el-form-item__label {
+            float: none;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .el-form-item__content {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    &.is-required:not(.is-no-asterisk) {
+        > .el-form-item__label:before {
+            content: '';
+            margin-right: initial;
+            color: transparent;
+        }
+        > .el-form-item__label:after {
+            content: '*';
+            margin-left: 4px;
+            color: #f56c6c;
+        }
+    }
+}
