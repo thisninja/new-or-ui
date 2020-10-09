@@ -1,18 +1,7 @@
 module.exports = {
-    presets: ['@vue/app'],
-    plugins: [
-        'dynamic-import-node',
-        [
-            'component',
-            {
-                libraryName: 'element-ui',
-                styleLibraryName: 'theme-chalk',
-            },
-        ],
+    presets: [
+    // BEFORE:
+    // '@vue/cli-plugin-babel/preset'
+        ['@vue/cli-plugin-babel/preset', { debug: true }],
     ],
-    env: {
-        test: {
-            plugins: ['require-context-hook'],
-        },
-    },
 };

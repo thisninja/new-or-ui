@@ -1,7 +1,0 @@
-.el-upload {
-	.el-upload__input {
-		// Display is already none by default with in element-ui style
-		// This is only necessary to override Bootstrap 'block' display in IRIS...
-		display: none !important;
-	}
-}

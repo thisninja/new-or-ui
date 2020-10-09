@@ -1,9 +1,0 @@
-.el-tooltip__popper{
-    &[x-placement^=right]{
-        margin-left: 22px !important;
-    }
-
-    &.no-transition {
-        transition: none !important;
-    }
-}

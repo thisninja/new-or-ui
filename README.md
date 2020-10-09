@@ -1,4 +1,4 @@
-# components-library
+# new-or-ui
 
 ## Project setup
 
@@ -10,14 +10,6 @@ yarn install
 
 ```
 yarn run serve
-```
-
-### Update icons
-
-Add icons to `svg-icons` folder as SVGs. Do not forget that fill colors must be `currentColor`. Then run:
-```
-yarn icons
-
 ```
 
 ### Compiles and minifies for production
@@ -42,12 +34,6 @@ yarn run test:unit
 
 ```
 yarn run storybook:serve
-```
-
-### Add to an app
-
-```
-yarn add git+ssh://git@github.com:Destygo/components-library.git
 ```
 
 ### Create a symlink to test locally in app

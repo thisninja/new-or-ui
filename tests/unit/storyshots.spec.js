@@ -3,5 +3,5 @@ import initStoryshots from '@storybook/addon-storyshots';
 
 registerRequireContextHook();
 initStoryshots({
-    configPath: './tests/storyshots.js',
+  configPath: './tests/storyshots.js'
 });
