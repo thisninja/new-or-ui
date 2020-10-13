@@ -2,7 +2,7 @@
 import TextExpression from './main.vue';
 
 TextExpression.install = (Vue) => {
-    Vue.component(TextExpression.name, TextExpression);
+  Vue.component(TextExpression.name, TextExpression);
 };
 
 export default TextExpression;

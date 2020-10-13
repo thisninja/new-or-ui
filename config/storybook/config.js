@@ -1,6 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Vue from 'vue';
-import { Button, Tag, Icon } from 'ant-design-vue';
+import {
+  Button, Tag, Icon, Popover, Checkbox, Radio
+} from 'ant-design-vue';
 import VueSVGIcon from 'vue-svgicon';
 import { configure, addDecorator } from '@storybook/vue';
 import { withInfo } from 'storybook-addon-vue-info';
@@ -10,7 +12,10 @@ import ComponentsLibrary from '../../src/index';
 
 addDecorator(withInfo);
 
+Vue.use(Checkbox);
+Vue.use(Radio);
 Vue.use(Button);
+Vue.use(Popover);
 Vue.use(Tag);
 Vue.use(Icon);
 Vue.use(VueSVGIcon);
@@ -18,8 +23,8 @@ Vue.use(ComponentsLibrary);
 
 const req = require.context('../../stories', true, /.stories.js$/);
 
-function loadStories() {
-    req.keys().forEach(filename => req(filename));
+function loadStories () {
+  req.keys().forEach(filename => req(filename));
 }
 
 configure(loadStories, module);

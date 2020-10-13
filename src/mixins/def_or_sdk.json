@@ -1,0 +1,599 @@
+{
+  "!name": "or-sdk",
+  "!define": {
+    "Promise.prototype": {
+      "catch": {
+        "!doc": "The catch() method returns a Promise and deals with rejected cases only. It behaves the same as calling Promise.prototype.then(undefined, rejectedHandler).",
+        "!url": "http://bluebirdjs.com/docs/api/catch.html",
+        "!type": "fn(rejectedHandler: fn(error: ?)) -> +Promise"
+      },
+      "then": {
+        "!doc": "The then() method returns a Promise. It takes two arguments, both are callback functions for the success and failure cases of the Promise.",
+        "!url": "http://bluebirdjs.com/docs/api/then.html",
+        "!type": "fn(fulfilledHandler: fn(value: ?), rejectedHandler: fn(error: ?)) -> +Promise",
+        "!effects": ["call !0 !this.value"]
+      }
+    },
+    "promiseReject": {
+      "!type": "fn(reason: ?)"
+    },
+    "Promise": {
+      "!type": "fn(executor: fn(resolve: fn(value: ?), reject: promiseReject)) -> !custom:Promise_ctor",
+      "!doc": "The Promise object is used for deferred and asynchronous computations. A Promise is in one of the three states:",
+      "!url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+      "all": {
+        "!type": "fn(iterable: [+Promise]) -> !0.<i>",
+        "!doc": "The Promise.all(iterable) method returns a promise that resolves when all of the promises in the iterable argument have resolved.",
+        "!url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all"
+      },
+      "race": {
+        "!type": "fn(iterable: [+Promise]) -> !0.<i>",
+        "!doc": "The Promise.race(iterable) method returns a promise that resolves or rejects as soon as one of the promises in the iterable resolves or rejects, with the value or reason from that promise.",
+        "!url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race"
+      },
+      "reject": {
+        "!type": "fn(reason: ?) -> !this",
+        "!doc": "The Promise.reject(reason) method returns a Promise object that is rejected with the given reason.",
+        "!url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject"
+      },
+      "resolve": {
+        "!type": "fn(value: ?) -> +Promise[value=!0]",
+        "!doc": "The Promise.resolve(value) method returns a Promise object that is resolved with the given value. If the value is a thenable (i.e. has a then method), the returned promise will 'follow' that thenable, adopting its eventual state; otherwise the returned promise will be fulfilled with the value.",
+        "!url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve"
+      },
+      "prototype": "Promise.prototype"
+    },
+    "FlowBase": {
+      "config": {
+        "!type": "object",
+        "!doc": "Flow config object"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Get access to Logger methods"
+      },
+      "stage": {
+        "!type": "string",
+        "!doc": "Get environment stage"
+      },
+      "helpers": {
+        "!type": "+Helpers",
+        "!doc": "Get access to helper methods"
+      }
+    },
+    "Triggers": {
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      },
+      "on": {
+        "!type": "fn() -> +Triggers",
+        "!doc": "Subscribe trigger to 'on' event"
+      },
+      "once": {
+        "!type": "fn() -> +Triggers",
+        "!doc": "Subscribe trigger to 'once' event"
+      },
+      "otherwise": {
+        "!type": "fn() -> ?",
+        "!doc": "Invoked if none of events are processed"
+      },
+      "params": {
+        "!type": "fn() -> ?",
+        "!doc": "Set next trigger(s) params"
+      },
+      "timeout": {
+        "!type": "fn() -> +Triggers",
+        "!doc": "Emit triggers and wait for event(s)"
+      }
+    },
+    "AccountSettings": {
+      "request": {
+        "!type": "+Request",
+        "!doc": "Request service"
+      },
+      "getAllSettings": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Get all settings for account"
+      },
+      "getSettingsByKey": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Get a setting for account by key"
+      },
+      "setAllSettings": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Set all settings for account"
+      },
+      "setSettingsByKey": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Set account settings by key"
+      },
+      "deleteSettingsByKey": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Delete account settings by key"
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "Basic": {
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "EventManager": {
+      "request": {
+        "!type": "+Request",
+        "!doc": "Request service"
+      },
+      "emit": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Emit event, call subscriber for this event and return it's result"
+      },
+      "emitEvents": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Process list of events  trigger events will be executed with `on` or `once` other events will be emitted with 'Event' invocation type"
+      },
+      "emitMultiple": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Process list of events  trigger events will be executed with `on` or `once` other events will be emitted with 'Event' invocation type"
+      }
+    },
+    "Helpers": {
+      "entityUrl": {
+        "!type": "fn() -> ?",
+        "!doc": "Build URL to access specified entity in data-hub"
+      },
+      "getGatewayUrl": {
+        "!type": "fn() -> ?",
+        "!doc": "Build URL to access specified path inside account via HTTPS gateway"
+      },
+      "gatewayUrl": {
+        "!type": "fn() -> ?",
+        "!doc": "Build URL to access specified path inside account via HTTPS gateway"
+      },
+      "prefixName": {
+        "!type": "fn() -> ?",
+        "!doc": "Build a name with account specific prefix"
+      },
+      "deployerUrl": {
+        "!type": "string",
+        "!doc": "Get URL for bot-deployer"
+      },
+      "providersAccountId": {
+        "!type": "string",
+        "!doc": "Get providers account id to use as target for provider events"
+      },
+      "environment": {
+        "!type": "string",
+        "!doc": "Get name of environment"
+      },
+      "accountPrefix": {
+        "!type": "string",
+        "!doc": "Get account specific prefix"
+      },
+      "prefix": {
+        "!type": "string",
+        "!doc": "Get account specific prefix"
+      },
+      "customDataUrl": {
+        "!type": "string",
+        "!doc": "Custom Data UI url"
+      },
+      "customDataApiUrl": {
+        "!type": "string",
+        "!doc": "Custom Data API endpoint url"
+      },
+      "liveAgentApiUrl": {
+        "!type": "string",
+        "!doc": "Live Agent API endpoint url"
+      },
+      "liveAgentSdkUrl": {
+        "!type": "string",
+        "!doc": "Live Agent SDK url"
+      },
+      "rwcClientUrl": {
+        "!type": "string",
+        "!doc": "Rich Web Chat client url"
+      },
+      "rwcClientBucket": {
+        "!type": "string",
+        "!doc": "Rich Web Chat client bucket name"
+      },
+      "sdkApiUrl": {
+        "!type": "string",
+        "!doc": "SDK API URL"
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "Logger": {
+      "error": {
+        "!type": "fn() -> ?",
+        "!doc": "Log an error"
+      },
+      "info": {
+        "!type": "fn() -> ?",
+        "!doc": "Log a message"
+      },
+      "time": {
+        "!type": "fn() -> ?",
+        "!doc": "Start timer"
+      },
+      "timeEnd": {
+        "!type": "fn() -> ?",
+        "!doc": "Stop timer and log time"
+      },
+      "warn": {
+        "!type": "fn() -> ?",
+        "!doc": "Log a warning"
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "Reporter": {
+      "addEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report arbitrary 'Bot' reporting event"
+      },
+      "addAccountEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report arbitrary 'Account' reporting event. This method is available from SDK, but any Account events reported from non-onereach system flows will be ignored."
+      },
+      "addProviderEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report arbitrary 'Provider' reporting event. This method is available from SDK, but any Provider events reported from non-onereach system flows will be ignored."
+      },
+      "reportApiEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"Api\" event"
+      },
+      "reportTagEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"Tag\" event"
+      },
+      "reportUserActionEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"UserAction\" event"
+      },
+      "reportSessionStart": {
+        "!type": "fn() -> ?",
+        "!doc": "Report Session Start event"
+      },
+      "reportSessionEnd": {
+        "!type": "fn() -> ?",
+        "!doc": "Report Session End event"
+      },
+      "reportStepEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"Step\" event"
+      },
+      "reportTranscriptEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"Transcript\" event"
+      },
+      "reportTelephonyEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"Telephony\" event"
+      },
+      "reportIdentifierEvent": {
+        "!type": "fn() -> ?",
+        "!doc": "Report \"Identifier\" event"
+      },
+      "detectIdentifierCountry": {
+        "!type": "fn() -> string",
+        "!doc": "Get two letter ISO country code of a phone number in E164 format"
+      },
+      "detectIdentifierType": {
+        "!type": "fn() -> string",
+        "!doc": "Detect type of the phone number/identifier given. Possible values: NumberPoolId, Tollfree, Longcode, Shortcode, Alphanumeric"
+      },
+      "calculateIdentifierId": {
+        "!type": "fn() -> string",
+        "!doc": "Calculates number/identifier id."
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "Request": {
+      "del": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make DELETE request"
+      },
+      "get": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make GET request"
+      },
+      "head": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make HEAD request"
+      },
+      "method": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make http request"
+      },
+      "patch": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make PATCH request"
+      },
+      "post": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make POST request"
+      },
+      "put": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Make PUT request"
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "Session": {
+      "timeout": {
+        "!type": "?",
+        "!doc": "Get session timeout"
+      },
+      "expirationDate": {
+        "!type": "?"
+      },
+      "startDate": {
+        "!type": "?"
+      },
+      "ending": {
+        "!type": "bool",
+        "!doc": "Is session end was called and session is in process of ending"
+      },
+      "end": {
+        "!type": "fn() -> ?",
+        "!doc": "Set session timeout to 1 and report SessionEnd"
+      },
+      "get": {
+        "!type": "fn() -> ?",
+        "!doc": "Get variable value"
+      },
+      "set": {
+        "!type": "fn() -> ?",
+        "!doc": "Set variable value"
+      },
+      "unset": {
+        "!type": "fn() -> ?",
+        "!doc": "Unset variable"
+      },
+      "unlockUpdateSession": {
+        "!type": "fn() -> ?",
+        "!doc": "Unlock a session, update and return session data"
+      },
+      "start": {
+        "!type": "fn() -> ?",
+        "!doc": "Set session state (sessionId, previousSessionId, beginningSessionId, sessionTimeout, sessionType, startedBy) and report Session Start event"
+      },
+      "toJSON": {
+        "!type": "fn() -> object",
+        "!doc": "Get session data object"
+      },
+      "openNewReportingSession": {
+        "!type": "fn() -> ?",
+        "!doc": "Start/Create/Open new reporting session, setting currently opened aside (to be returned to later by calling `closeCurrentReportingSession`) and report SessionStart event (if not specifically disabled). New Reporting Session would inherit `BeginningSessionId` and `SessionId` (as `PreviousSessionId`) of a current Reporting Session and generate new `SessionId` and `SessionStartTime` if these values are not overridden"
+      },
+      "closeCurrentReportingSession": {
+        "!type": "fn() -> ?",
+        "!doc": "End/Destroy/Close current Reporting Session and set previous Reporting Session from the stack (if previously opened with openNewReportingSession), and report SessionEnd event (if not specifically disabled)."
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    },
+    "KeyValueStorage": {
+      "request": {
+        "!type": "+Request",
+        "!doc": "Request service"
+      },
+      "listAll": {
+        "!type": "fn() -> array",
+        "!doc": "List all the keys in table starting with a given substring"
+      },
+      "list": {
+        "!type": "fn() -> array",
+        "!doc": "List keys in table starting with a given substring; no more then maxKeys"
+      },
+      "get": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Get a value from table storage by key"
+      },
+      "set": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Set a value to table by key"
+      },
+      "delete": {
+        "!type": "fn() -> +Promise",
+        "!doc": "Delete table value by key"
+      },
+      "flow": {
+        "!type": "+Flow",
+        "!doc": "Flow back-reference"
+      },
+      "log": {
+        "!type": "+Logger",
+        "!doc": "Alias for this.flow.log"
+      }
+    }
+  },
+  "accountSettings": {
+    "!type": "+AccountSettings",
+    "!doc": "Account settings service"
+  },
+  "currentStepId": {
+    "!type": "string",
+    "!doc": "Guid of step the flow execution is on currently"
+  },
+  "currentStep": {
+    "!type": "+Step",
+    "!doc": "Step the flow execution is on at the moment"
+  },
+  "dataOut": {
+    "!type": "?",
+    "!doc": "Set current step data out variable value"
+  },
+  "event": {
+    "!type": "object",
+    "!doc": "Get Event flow was triggered with"
+  },
+  "events": {
+    "!type": "array",
+    "!doc": "A list of Events to be triggered when current flow execution finishes"
+  },
+  "eventManager": {
+    "!type": "+EventManager",
+    "!doc": "EventManager service"
+  },
+  "exiting": {
+    "!type": "bool",
+    "!doc": "Is flow execution in the process of termination right now?"
+  },
+  "reporter": {
+    "!type": "+Reporter",
+    "!doc": "Reporter service"
+  },
+  "result": {
+    "!type": "?",
+    "!doc": "Flow execution result object"
+  },
+  "request": {
+    "!type": "object",
+    "!doc": "Request object current flow execution started with. Contains only requestId and requestTime"
+  },
+  "session": {
+    "!type": "+Session",
+    "!doc": "Session service"
+  },
+  "triggers": {
+    "!type": "+Triggers",
+    "!doc": "Triggers helper"
+  },
+  "get": {
+    "!type": "fn() -> ?",
+    "!doc": "Get flow variable value from current session"
+  },
+  "set": {
+    "!type": "fn() -> ?",
+    "!doc": "Set flow variable value in current session"
+  },
+  "unset": {
+    "!type": "fn() -> ?",
+    "!doc": "Remove flow variable value from current session"
+  },
+  "unsetAll": {
+    "!type": "fn() -> ?",
+    "!doc": "Clear flow data space filled by `flow.set` calls"
+  },
+  "hook": {
+    "!type": "fn() -> +Promise",
+    "!doc": "Adds current step to a hook list and exit to next step if invoked during hook processing - invokes a hook handler otherwise exit"
+  },
+  "removeHook": {
+    "!type": "fn() -> ?",
+    "!doc": "Removes a step from hook list"
+  },
+  "jumpTo": {
+    "!type": "fn() -> ?",
+    "!doc": "Pass execution to next step function."
+  },
+  "emit": {
+    "!type": "fn() -> ?",
+    "!doc": "Add Event for post-processing (to be processed when current flow execution finishes)"
+  },
+  "emitAsync": {
+    "!type": "fn() -> ?",
+    "!doc": "Emit Event asynchronously (don't wait for the triggered flow execution result)"
+  },
+  "emitMultiple": {
+    "!type": "fn() -> ?",
+    "!doc": "Add multiple Events for post-processing (to be processed when current flow execution finishes)"
+  },
+  "emitMultipleAsync": {
+    "!type": "fn() -> +Promise",
+    "!doc": "Emit multiple Events asynchronously (don't wait for the triggered flows execution results)"
+  },
+  "emitMultipleSync": {
+    "!type": "fn() -> +Promise",
+    "!doc": "Emit multiple Events synchronously (wait for the triggered flows execution results)"
+  },
+  "emitSync": {
+    "!type": "fn() -> +Promise",
+    "!doc": "Emit Event synchronously (wait for the triggered flow execution result)"
+  },
+  "exit": {
+    "!type": "fn() -> ?",
+    "!doc": "exitFlow alias"
+  },
+  "exitFlow": {
+    "!type": "fn() -> object",
+    "!doc": "Exit flow. Conclude current flow execution"
+  },
+  "exitStep": {
+    "!type": "fn() -> object",
+    "!doc": "Exit current step. Pass execution to next step."
+  },
+  "report": {
+    "!type": "fn() -> ?",
+    "!doc": "Report event to reporting service. a shortcut for this.reporter.addEvent"
+  },
+  "config": {
+    "!type": "object",
+    "!doc": "Flow config object"
+  },
+  "log": {
+    "!type": "+Logger",
+    "!doc": "Get access to Logger methods"
+  },
+  "stage": {
+    "!type": "string",
+    "!doc": "Get environment stage"
+  },
+  "helpers": {
+    "!type": "+Helpers",
+    "!doc": "Get access to helper methods"
+  }
+}
